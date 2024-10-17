@@ -29,19 +29,19 @@ export class CurrencyConverter {
     private readonly EUR_TO_DOLLAR = 1.1329;
     private readonly EUR_TO_JPY = 128.121;
 
-    private convert_calisthenics(money: Money, toCurrency: Currency): Amount {
+    private convert_calisthenics(money: Money, toCurrency: Currency): Money {
         if (money.currency == Currency.EUR && toCurrency == Currency.USD) {
-            return money.amount.multiply(this.EUR_TO_DOLLAR).round(2);
+            return new Money(money.amount.multiply(this.EUR_TO_DOLLAR).round(2), Currency.USD);
         }
         if (money.currency == Currency.EUR && toCurrency == Currency.JPY) {
-            return money.amount.multiply(this.EUR_TO_JPY).round(0);
+            return new Money(money.amount.multiply(this.EUR_TO_JPY).round(0), Currency.JPY);
         }
 
         if (money.currency == Currency.JPY && toCurrency == Currency.USD) {
-            return money.amount.multiply(this.EUR_TO_DOLLAR / this.EUR_TO_JPY).round(2);
+            return new Money(money.amount.multiply(this.EUR_TO_DOLLAR / this.EUR_TO_JPY).round(2), Currency.USD);
         }
 
-        return money.amount;
+        return money;
     }
 
     convert(amount: number, fromCurrency: string, toCurrency: string): number {
@@ -49,6 +49,6 @@ export class CurrencyConverter {
             new Money(new Amount(amount),
                 Currency[fromCurrency as keyof typeof Currency]),
             Currency[toCurrency as keyof typeof Currency]
-        ).amount;
+        ).amount.amount;
     }
 }
