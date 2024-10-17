@@ -23,14 +23,14 @@ export class CurrencyConverter {
 
   private convert_calisthenics(money: Money, toCurrency: Currency) : Amount {
     if (money.currency == Currency.EUR && toCurrency == Currency.USD) {
-      return new Amount(Math.round(money.amount.amount * this.EUR_TO_DOLLAR * 100) / 100);
+      return new Amount(Math.round(new Amount(money.amount.amount * this.EUR_TO_DOLLAR).amount * 100) / 100);
     }
     if (money.currency == Currency.EUR && toCurrency == Currency.JPY) {
-      return new Amount(Math.round(money.amount.amount * this.EUR_TO_JPY));
+      return new Amount(Math.round(new Amount(money.amount.amount * this.EUR_TO_JPY).amount));
     }
 
     if (money.currency == Currency.JPY && toCurrency == Currency.USD) {
-      return new Amount(Math.round(money.amount.amount * this.EUR_TO_DOLLAR / this.EUR_TO_JPY * 100) / 100);
+      return new Amount(Math.round(new Amount(money.amount.amount * this.EUR_TO_DOLLAR / this.EUR_TO_JPY).amount * 100) / 100);
     }
 
     return money.amount;
