@@ -12,29 +12,34 @@ enum Currency {
   JPY,
 }
 
+class Money {
+  constructor(public amount: Amount, public currency: Currency) {
+  }
+}
+
 export class CurrencyConverter {
   private readonly EUR_TO_DOLLAR = 1.1329;
   private readonly EUR_TO_JPY = 128.121;
 
-  private convert_calisthenics(amount: Amount, fromCurrency: Currency, toCurrency: Currency) : Amount {
-    if (fromCurrency == Currency.EUR && toCurrency == Currency.USD) {
-      return new Amount(Math.round(amount.amount * this.EUR_TO_DOLLAR * 100) / 100);
+  private convert_calisthenics(money: Money, toCurrency: Currency) : Amount {
+    if (money.currency == Currency.EUR && toCurrency == Currency.USD) {
+      return new Amount(Math.round(money.amount.amount * this.EUR_TO_DOLLAR * 100) / 100);
     }
-    if (fromCurrency == Currency.EUR && toCurrency == Currency.JPY) {
-      return new Amount(Math.round(amount.amount * this.EUR_TO_JPY));
-    }
-
-    if (fromCurrency == Currency.JPY && toCurrency == Currency.USD) {
-      return new Amount(Math.round(amount.amount * this.EUR_TO_DOLLAR / this.EUR_TO_JPY * 100) / 100);
+    if (money.currency == Currency.EUR && toCurrency == Currency.JPY) {
+      return new Amount(Math.round(money.amount.amount * this.EUR_TO_JPY));
     }
 
-    return amount;
+    if (money.currency == Currency.JPY && toCurrency == Currency.USD) {
+      return new Amount(Math.round(money.amount.amount * this.EUR_TO_DOLLAR / this.EUR_TO_JPY * 100) / 100);
+    }
+
+    return money.amount;
   }
 
   convert(amount: number, fromCurrency: string, toCurrency: string): number {
     return this.convert_calisthenics(
-      new Amount(amount),
-      Currency[fromCurrency as keyof typeof Currency],
+      new Money(new Amount(amount),
+      Currency[fromCurrency as keyof typeof Currency]),
       Currency[toCurrency as keyof typeof Currency]
     ).amount;
   }
