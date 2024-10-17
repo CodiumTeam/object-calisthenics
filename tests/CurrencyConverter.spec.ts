@@ -17,4 +17,11 @@ describe('Currency Converter', () => {
     expect(currencyConverter.convert(amount, "EUR", "USD")).toBe(expectedChange)
   })
 
+  test.each([
+    [10, 1281],
+  ])('convert Euros to Yens', (amount, expectedChange) => {
+    const currencyConverter = new CurrencyConverter()
+    expect(currencyConverter.convert(amount, "EUR", "JPY")).toBe(expectedChange)
+  })
+
 })
