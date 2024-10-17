@@ -8,6 +8,10 @@ class Amount {
     round(decimals: number): Amount {
         return new Amount(Math.round(this.amount * 10 ** decimals) / 10 ** decimals);
     }
+
+    multiply(number: number) {
+        return this.amount * number;
+    }
 }
 
 enum Currency {
@@ -27,14 +31,14 @@ export class CurrencyConverter {
 
     private convert_calisthenics(money: Money, toCurrency: Currency): Amount {
         if (money.currency == Currency.EUR && toCurrency == Currency.USD) {
-            return new Amount(money.amount.amount * this.EUR_TO_DOLLAR).round(2);
+            return new Amount(money.amount.multiply(this.EUR_TO_DOLLAR)).round(2);
         }
         if (money.currency == Currency.EUR && toCurrency == Currency.JPY) {
-            return new Amount(money.amount.amount * this.EUR_TO_JPY).round(0);
+            return new Amount(money.amount.multiply(this.EUR_TO_JPY)).round(0);
         }
 
         if (money.currency == Currency.JPY && toCurrency == Currency.USD) {
-            return new Amount(money.amount.amount * this.EUR_TO_DOLLAR / this.EUR_TO_JPY).round(2);
+            return new Amount(money.amount.multiply(this.EUR_TO_DOLLAR / this.EUR_TO_JPY)).round(2);
         }
 
         return money.amount;
