@@ -1,4 +1,4 @@
-import { CurrencyConverter } from '../src/CurrencyConverter'
+import {CurrencyConverter} from '../src/CurrencyConverter'
 
 describe('Currency Converter', () => {
 
@@ -24,4 +24,10 @@ describe('Currency Converter', () => {
     expect(currencyConverter.convert(amount, "EUR", "JPY")).toBe(expectedChange)
   })
 
+  test.each([
+    [1281, 11.33],
+  ])('convert Yens to Dollars', (amount, expectedChange) => {
+    const currencyConverter = new CurrencyConverter()
+    expect(currencyConverter.convert(amount, "JPY", "USD")).toBe(expectedChange)
+  });
 })
