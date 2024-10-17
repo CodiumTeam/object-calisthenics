@@ -9,4 +9,12 @@ describe('Currency Converter', () => {
     const currencyConverter = new CurrencyConverter()
     expect(currencyConverter.convert(amount, "EUR", "EUR")).toBe(amount)
   })
+
+  test.each([
+    [10, 11.33],
+  ])('convert Euros to Dollars', (amount, expectedChange) => {
+    const currencyConverter = new CurrencyConverter()
+    expect(currencyConverter.convert(amount, "EUR", "USD")).toBe(expectedChange)
+  })
+
 })
