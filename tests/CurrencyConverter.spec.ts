@@ -26,6 +26,7 @@ describe('Currency Converter', () => {
 
   test.each([
     [1281, 11.33],
+    [2562, 22.65],
   ])('convert Yens to Dollars', (amount, expectedChange) => {
     const currencyConverter = new CurrencyConverter()
     expect(currencyConverter.convert(amount, "JPY", "USD")).toBe(expectedChange)
